@@ -1,0 +1,43 @@
+<div class="card mb-4">
+  <div class="card-header font-weight-bold">
+    Architecture
+  </div>
+  <div class="card-body">
+    <ol>
+      <li>DDD (Domain Driven Design) approach has been used. Instead of strict discrimination of the Infrastructure and
+        the Domain layer. I follow more SPA based logic and merge them under the `store` layer.
+      </li>
+      <li>Each domain has own store and infrastructure and domain components such as model, services, states etc</li>
+      <li>Application layer introduced as modules which contains lazy loaded modules (features)</li>
+      <li>We have also core module where our configurations and application wide definitions declared and stored</li>
+    </ol>
+  </div>
+</div>
+
+<div class="card mb-4">
+  <div class="card-header font-weight-bold">
+    Manual Installation
+  </div>
+
+  <div class="card-body">
+    <ol>
+      <li>Clone repository via git cli <code>git clone git@github.com:hsntngr/shopping-ui.git</code></li>
+      <li>Install dependencies via <code>npm install</code></li>
+      <li>Run the application via <code>npm start</code></li>
+      <li>When the application ready visit the <a href="http://localhost:4200">http://localhost:4200</a></li>
+    </ol>
+  </div>
+</div>
+
+<div class="card mb-4">
+  <div class="card-header font-weight-bold">
+    Docker
+  </div>
+  <div class="card-body">
+    <ol>
+      <li>Create an image via <code>docker build -t [authority]/shopping-ui</code></li>
+      <li>Create a container from image via <code>`docker run -d --restart always --name sre-instance -p 4200:80 [authority]/shopping-ui`</code></li>
+      <li>When the application ready visit the <a href="http://localhost:4200">http://localhost:4200</a></li>
+    </ol>
+  </div>
+</div>
