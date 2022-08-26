@@ -1,14 +1,29 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { CurrentUserResolver } from '@store/auth/resolvers/current-user.resolver';
+import { BaseComponent } from '@shared/layout/base/base.component';
+import { CartItemsResolver } from '@store/cart/resolvers/cart-items.resolver';
+
 const routes: Routes = [
-  { path: '', pathMatch: 'full', loadChildren: () => import('./modules/home/home.module').then(x => x.HomeModule) },
-  { path: 'orders', loadChildren: () => import('./modules/orders/orders.module').then(x => x.OrdersModule) },
-  { path: 'products', loadChildren: () => import('./modules/products/products.module').then(x => x.ProductsModule) },
+  {
+    path: '',
+    component: BaseComponent,
+    resolve: { currentUser: CurrentUserResolver, cart: CartItemsResolver },
+    children: [
+      { path: '', pathMatch: 'full', loadChildren: () => import('./modules/home/home.module').then(x => x.HomeModule) },
+      { path: 'orders', loadChildren: () => import('./modules/orders/orders.module').then(x => x.OrdersModule) },
+      {
+        path: 'products',
+        loadChildren: () => import('./modules/products/products.module').then(x => x.ProductsModule)
+      },
+    ]
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

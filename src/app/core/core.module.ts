@@ -1,13 +1,18 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgxsModule, Store } from '@ngxs/store';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { NgxsSelectSnapshotModule } from '@ngxs-labs/select-snapshot';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreModule } from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
-import { NGRX_STORE_CONFIG } from './config/ngx-store.config';
-import { NGRX_STORE_DEVTOOLS_CONFIG } from './config/ngx-store-devtools.config';
+import { NGXS_STORE_DEVTOOLS_CONFIG } from './config/ngxs-store-devtools.config';
 import { PrependApiUrlInterceptor } from '@core/interceptors/prepend-api-url.interceptor';
+import { AuthState } from '@store/auth/state/auth.state';
+import { authenticationInitializer } from '@store/auth/initializers/authentication.initializers';
+import { SetAuthorizationHeaderInterceptor } from '@core/interceptors/set-authorization-header.interceptor';
+import { CartState } from '@store/cart/state/cart.state';
+import { StateClass } from '@ngxs/store/internals';
 
 
 @NgModule({
@@ -15,12 +20,21 @@ import { PrependApiUrlInterceptor } from '@core/interceptors/prepend-api-url.int
   imports: [
     CommonModule,
     HttpClientModule,
-    StoreModule.forRoot(NGRX_STORE_CONFIG),
-    EffectsModule.forRoot(),
-    StoreDevtoolsModule.instrument(NGRX_STORE_DEVTOOLS_CONFIG),
+    NgxsModule.forRoot([AuthState, CartState] as StateClass[]),
+    NgxsSelectSnapshotModule.forRoot(),
+    NgxsReduxDevtoolsPluginModule.forRoot(NGXS_STORE_DEVTOOLS_CONFIG),
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, multi: true, useClass: PrependApiUrlInterceptor }
+    { provide: HTTP_INTERCEPTORS, multi: true, useClass: PrependApiUrlInterceptor },
+    { provide: HTTP_INTERCEPTORS, multi: true, useClass: SetAuthorizationHeaderInterceptor },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: authenticationInitializer,
+      deps: [Store],
+      multi: true
+    },
   ]
 })
 export class CoreModule {

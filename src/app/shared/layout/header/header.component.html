@@ -1,12 +1,35 @@
 <div class="p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
   <div class="container d-flex justify-content-between align-items-center">
-    <h5 class="my-0 mr-md-auto font-weight-normal">Shopping Assessment</h5>
+    <a routerLink="/">
+      <h5 class="my-0 mr-md-auto font-weight-normal">Shopping Assessment</h5>
+    </a>
     <div class="navigations d-flex justify-content-between align-items-center">
       <nav class="my-2 my-md-0 mr-md-3">
-        <a class="p-2 text-dark" href="#">Products</a>
-        <a class="p-2 text-dark" href="#">Orders</a>
+        <a class="navigations__link p-2 text-dark" routerLinkActive="active" routerLink="/products">Products</a>
+        <a class="navigations__link p-2 text-dark" routerLinkActive="active" routerLink="/orders">Orders</a>
       </nav>
-      <a class="btn btn-outline-primary" href="#">Login</a>
+      <ng-container *ngIf="isLoggedIn$ | async else loginRef">
+        <div mdbDropdown class="dropdown" *ngIf="user$ | async as user">
+          <button class="btn btn-default dropdown-toggle" aria-expanded="false"
+                  type="button" id="dropdownMenu2" mdbDropdownToggle>
+            {{ user.firstName }} {{ user.lastName }}
+          </button>
+          <ul mdbDropdownMenu class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenu2">
+            <li>
+              <button class="dropdown-item" type="button" (click)="onLogoutClick()">Logout</button>
+            </li>
+          </ul>
+        </div>
+        <a class="btn btn-default cart-link" aria-expanded="false" type="button" routerLink="/cart">
+          <span class="fa fa-cart-plus cart-link__icon"></span>
+          <span class="cart-link__count" *ngIf="cartItemsCount$ | async as count">
+            {{ count > 9 ? '9+' : count }}
+          </span>
+        </a>
+      </ng-container>
+      <ng-template #loginRef>
+        <button class="btn btn-outline-primary" (click)="onLoginButtonClick()">Login</button>
+      </ng-template>
     </div>
   </div>
 </div>

@@ -1,0 +1,39 @@
+.navigations {
+  &__link {
+    &.active {
+      color: #1266f1 !important;
+    }
+  }
+}
+
+.cart-link,
+div[mdbDropdown] > button {
+  box-shadow: none;
+  padding: 10px;
+  text-transform: none;
+  font-size: var(--mdb-body-font-size);;
+}
+
+
+.cart-link {
+  position: relative;
+
+  &__count {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    background-color: #1976D2;
+    color: white;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__icon {
+    font-size: 1.15em;
+  }
+}

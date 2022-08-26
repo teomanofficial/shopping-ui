@@ -1,4 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { Observable } from 'rxjs';
+import { Select, Store } from '@ngxs/store';
+
+import { AuthState } from '@store/auth/state/auth.state';
+import { LoginComponent } from '@shared/components/login/login.component';
+import { CurrentUserModel } from '@store/auth/models/current-user.model';
+import { Logout } from '@store/auth/state/auth.actions';
+import { CartState } from '@store/cart/state/cart.state';
 
 @Component({
   selector: 'app-header',
@@ -6,10 +15,29 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  @Select(AuthState.selectIsLoggedIn)
+  isLoggedIn$: Observable<boolean>;
 
-  constructor() { }
+  @Select(AuthState.selectUser)
+  user$: Observable<CurrentUserModel>;
+
+  @Select(CartState.selectCartItemCount)
+  cartItemsCount$: Observable<number>;
+
+  constructor(
+    private readonly store: Store,
+    private readonly dialogService: MdbModalService
+  ) {
+  }
 
   ngOnInit(): void {
   }
 
+  onLoginButtonClick() {
+    this.dialogService.open(LoginComponent, { modalClass: 'cascading-modal' })
+  }
+
+  onLogoutClick() {
+    this.store.dispatch(new Logout());
+  }
 }
