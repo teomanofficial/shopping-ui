@@ -6,6 +6,7 @@ import { GetProductList } from '@store/products/state/product.actions';
 import { ProductState } from '@store/products/state/product.state';
 import { ProductResponseModel } from '@store/products/models/product-response.model';
 import { CreateOrIncrementCartItem } from '@store/cart/state/cart.actions';
+import { DataStateType } from '@core/store';
 
 @Component({
   selector: 'app-products',
@@ -15,6 +16,9 @@ import { CreateOrIncrementCartItem } from '@store/cart/state/cart.actions';
 export class ProductsComponent implements OnInit {
   @Select(ProductState.selectProducts)
   products$: Observable<ProductResponseModel[]>;
+
+  @Select(ProductState.selectDataState)
+  productsDataState$: Observable<DataStateType>;
 
   constructor(
     private readonly store: Store

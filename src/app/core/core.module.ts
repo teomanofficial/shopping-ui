@@ -5,6 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsSelectSnapshotModule } from '@ngxs-labs/select-snapshot';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { StateClass } from '@ngxs/store/internals';
+import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 
 import { NGXS_STORE_DEVTOOLS_CONFIG } from './config/ngxs-store-devtools.config';
 import { PrependApiUrlInterceptor } from '@core/interceptors/prepend-api-url.interceptor';
@@ -12,7 +14,6 @@ import { AuthState } from '@store/auth/state/auth.state';
 import { authenticationInitializer } from '@store/auth/initializers/authentication.initializers';
 import { SetAuthorizationHeaderInterceptor } from '@core/interceptors/set-authorization-header.interceptor';
 import { CartState } from '@store/cart/state/cart.state';
-import { StateClass } from '@ngxs/store/internals';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { StateClass } from '@ngxs/store/internals';
     HttpClientModule,
     NgxsModule.forRoot([AuthState, CartState] as StateClass[]),
     NgxsSelectSnapshotModule.forRoot(),
+    NgxsRouterPluginModule.forRoot(),
     NgxsReduxDevtoolsPluginModule.forRoot(NGXS_STORE_DEVTOOLS_CONFIG),
     FormsModule,
     ReactiveFormsModule,

@@ -12,6 +12,7 @@ const routes: Routes = [
     resolve: { currentUser: CurrentUserResolver, cart: CartItemsResolver },
     children: [
       { path: '', pathMatch: 'full', loadChildren: () => import('./modules/home/home.module').then(x => x.HomeModule) },
+      { path: 'cart', loadChildren: () => import('./modules/cart/cart.module').then(x => x.CartModule) },
       { path: 'orders', loadChildren: () => import('./modules/orders/orders.module').then(x => x.OrdersModule) },
       {
         path: 'products',

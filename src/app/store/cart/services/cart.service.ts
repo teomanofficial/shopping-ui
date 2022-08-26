@@ -21,7 +21,7 @@ export class CartService {
     return this.http.put<CartItemResponseModel>('api/Cart/RemoveOrDecrement', { productId })
   }
 
-  clearCart(productId: string) {
+  clearCart() {
     return this.http.delete<CartItemResponseModel>('api/Cart')
   }
 }

@@ -1,0 +1,58 @@
+<app-page-header>
+  <span appPageTitle>Shopping Cart</span>
+  <ng-container appPageActions *ngIf="(cartItems$ | async).length">
+    <button class="btn btn-link" (click)="onClearCartButtonClick()" [disabled]="cartActionLoading">
+      Clear Shopping Cart
+    </button>
+    <button class="btn btn-success" (click)="onCreateOrderButtonClick()"
+            [disabled]="cartActionLoading || !selectedProductIds.length">
+      Create Order
+    </button>
+  </ng-container>
+</app-page-header>
+
+<app-entity-data-container [dataState]="cartItemsDataState$ | async">
+  <small style="margin-bottom: 10px; display: block">Select following products to create new order</small>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th width="5%"></th>
+      <th>Product Name</th>
+      <th>Quantity</th>
+      <th>Price</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of cartItems$ | async; trackBy: trackByCartItem" [class.row-selected]="selectedProductIds.includes(item.productId)">
+      <td class="text-center">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                 (change)="onProductCheckboxChange(item.productId)"
+                 [checked]="selectedProductIds.includes(item.productId)"/>
+        </div>
+      </td>
+      <td>{{ item.product.name }}</td>
+      <td>{{ item.quantity }}</td>
+      <td>{{ (item.product.price * item.quantity) | currency }}</td>
+      <td class="text-center actions">
+        <button type="button" class="btn btn-default btn-sm btn-floating" style="margin-right: 10px"
+                [disabled]="quantityChangeLoading"
+                (click)="onIncrementButtonClick(item.productId)">
+          <i class="fa fa-plus"></i>
+        </button>
+        <button type="button" class="btn btn-default btn-sm btn-floating"
+                [disabled]="quantityChangeLoading"
+                (click)="onDecrementButtonClick(item.productId)">
+          <i class="fa fa-minus"></i>
+        </button>
+      </td>
+    </tr>
+    </tbody>
+    <tfoot *ngIf="selectedProductIds && selectedProductIds.length">
+    <tr>
+      <td colspan="4">Total Cost</td>
+      <td class="text-center">{{ getTotalCost() | async | currency }}</td>
+    </tr>
+    </tfoot>
+  </table>
+</app-entity-data-container>

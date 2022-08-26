@@ -4,7 +4,7 @@
   </div>
   <div class="product__content">
     <div class="product__title">{{ product.name }}</div>
-    <div class="product__price">${{ product.price }}</div>
+    <div class="product__price">{{ product.price | currency }}</div>
     <button class="btn btn-default product__add-basket" (click)="onAddBasketButtonClick()">
       <span class="fa fa-plus"></span>
     </button>

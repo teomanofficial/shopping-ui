@@ -22,6 +22,11 @@ export class ProductState {
     return data;
   }
 
+  @Selector()
+  static selectDataState({ dataState }: ProductStateModel) {
+    return dataState;
+  }
+
   constructor(private readonly productsService: ProductsService) {
   }
 
