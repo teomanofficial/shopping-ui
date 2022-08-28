@@ -1,22 +1,22 @@
 <div class="card">
-  <div class="card-header">
+  <div class="card-header" id="preview-order-title">
     <span class="font-weight-bold">Preview Order Details</span>
   </div>
   <div class="card-body">
     <ng-container *ngIf="step === 'details'">
-      <table class="table table-bordered">
+      <table class="table table-bordered" id="preview-order-details-table">
         <tbody>
         <tr>
           <td class="font-weight-bold">Order Code</td>
-          <td>{{ order.code }}</td>
+          <td id="preview-order-details-order-code">{{ order.code }}</td>
         </tr>
         <tr>
           <td class="font-weight-bold">Total Price</td>
-          <td>{{ order.totalPrice | currency }}</td>
+          <td id="preview-order-details-total-price">{{ order.totalPrice | currency }}</td>
         </tr>
         <tr>
           <td class="font-weight-bold">Number Of Products</td>
-          <td>{{ order.orderItems.length }}</td>
+          <td id="preview-order-details-number-of-products">{{ order.orderItems.length }}</td>
         </tr>
         </tbody>
       </table>
@@ -30,10 +30,15 @@
       </app-order-items-list>
     </ng-container>
   </div>
-  <div class="card-footer d-flex" [class.justify-content-between]="step === 'items'" [class.justify-content-end]="step === 'details'">
-    <button (click)="step = 'items'" *ngIf="step === 'details'" class="btn btn-success">Continue</button>
-    <button class="btn btn-default" (click)="step = 'details'" *ngIf="step === 'items'">Previous</button>
-    <button (click)="onCompleteOrderClick()"
+  <div class="card-footer d-flex" [class.justify-content-between]="step === 'items'"
+       [class.justify-content-end]="step === 'details'">
+    <button (click)="step = 'items'" *ngIf="step === 'details'" class="btn btn-success"
+            id="preview-order-continue-button">Continue
+    </button>
+    <button class="btn btn-default" (click)="step = 'details'" *ngIf="step === 'items'"
+            id="preview-order-previous-button">Previous
+    </button>
+    <button (click)="onCompleteOrderClick()" id="preview-order-complete-order-button"
             [disabled]="actionLoading" *ngIf="step === 'items'"
             class="btn btn-success">
       Complete Order

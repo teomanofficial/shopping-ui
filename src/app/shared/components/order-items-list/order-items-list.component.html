@@ -1,4 +1,4 @@
-<table class="table table-bordered table-stripped">
+<table class="table table-bordered table-stripped" id="order-item-list-table">
   <thead>
   <tr>
     <th>Product Name</th>
@@ -8,19 +8,20 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let item of orderItems; trackBy: trackByOrderItem">
+  <tr *ngFor="let item of orderItems; let i = index; trackBy: trackByOrderItem">
     <td>{{ item.productName }}</td>
     <td>{{ item.price * item.quantity | currency }}</td>
     <td class="text-center actions">
       <div class="btn-group" role="group">
         <button (click)="onIncrementButtonClick(item)" [disabled]="actionLoading || item.quantity >= 10"
-                class="btn btn-primary btn-sm btn-floating"
+                class="btn btn-primary btn-sm btn-floating" [id]="'order-item-increment-' + i"
                 type="button">
           <i class="fa fa-plus"></i>
         </button>
-        <button class="btn btn-default btn-sm">{{ item.quantity }}</button>
+        <button class="btn btn-default btn-sm" [id]="'order-item-quantity-' + i">{{ item.quantity }}</button>
         <button (click)="onDecrementButtonClick(item)" [disabled]="actionLoading || item.quantity === 1"
                 class="btn btn-primary btn-sm btn-floating"
+                [id]="'order-item-decrement-' + i"
                 type="button">
           <i class="fa fa-minus"></i>
         </button>
@@ -28,7 +29,7 @@
     </td>
     <td>
       <button (click)="onDeleteOrderItemButtonClick(item)" [disabled]="actionLoading"
-              class="btn btn-danger btn-sm btn-floating"
+              class="btn btn-danger btn-sm btn-floating" [id]="'order-item-remove-' + i"
               type="button">
         <i class="fa fa-trash"></i>
       </button>

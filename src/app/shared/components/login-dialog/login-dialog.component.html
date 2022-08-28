@@ -2,8 +2,8 @@
   <div class="card">
     <div class="card-header font-weight-bold">Login To Your Account</div>
     <div class="card-body">
-      <div class="alert alert-danger" *ngIf="loginFailedError">{{ loginFailedError }}</div>
-      <div class="alert alert-danger" *ngIf="validationErrors.length">
+      <div class="alert alert-danger" id="login-failed-alert" *ngIf="loginFailedError">{{ loginFailedError }}</div>
+      <div class="alert alert-danger" id="login-validation-errors" *ngIf="validationErrors.length">
         <ul style="margin-bottom: 0">
           <li *ngFor="let error of validationErrors">{{ error.message }}</li>
         </ul>
@@ -24,6 +24,6 @@
   </div>
   <div class="card-footer d-flex align-items-center justify-content-between">
     <button class="btn btn-light btn-sm" type="button" (click)="onCancelButtonClick()">Cancel</button>
-    <button class="btn btn-primary btn-sm">Login</button>
+    <button class="btn btn-primary btn-sm" id="login-button">Login</button>
   </div>
 </form>

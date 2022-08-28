@@ -3,9 +3,9 @@
     <img alt="product" src="assets/images/products/product.png">
   </div>
   <div class="product__content">
-    <div class="product__title">{{ product.name }}</div>
-    <div class="product__price">{{ product.price | currency }}</div>
-    <button (click)="onAddBasketButtonClick()" class="btn btn-default product__add-basket">
+    <div class="product__title" id="product-title">{{ product.name }}</div>
+    <div class="product__price" id="product-price">{{ product.price | currency }}</div>
+    <button (click)="onAddBasketButtonClick()" class="btn btn-default product__add-basket" id="product-add-to-cart">
       <span class="fa fa-plus"></span>
     </button>
   </div>
