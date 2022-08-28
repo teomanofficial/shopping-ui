@@ -16,11 +16,11 @@ import { BaseComponent } from './base/base.component';
     ContentComponent,
     BaseComponent
   ],
-    imports: [
-        CommonModule,
-        RouterModule,
-        MdbDropdownModule
-    ],
+  imports: [
+    CommonModule,
+    RouterModule,
+    MdbDropdownModule
+  ],
   exports: [
     HeaderComponent,
     FooterComponent,
@@ -28,4 +28,5 @@ import { BaseComponent } from './base/base.component';
     BaseComponent
   ]
 })
-export class LayoutModule { }
+export class LayoutModule {
+}

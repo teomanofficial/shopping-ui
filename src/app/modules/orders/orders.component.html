@@ -1,1 +1,31 @@
-<p>orders works!</p>
+<app-page-header>
+  <ng-container appPageTitle>Orders</ng-container>
+</app-page-header>
+
+<app-entity-data-container [dataState]="ordersDataState$ | async">
+  <table class="table table-bordered table-striped w-100">
+    <thead>
+    <tr>
+      <th>Order Name</th>
+      <th>Total Price</th>
+      <th>Date</th>
+      <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let order of orders$ | async">
+      <td width="30%">{{ order.code }}</td>
+      <td width="30%">{{ order.totalPrice | currency }}</td>
+      <td width="20%">{{ order.createdAt | date: 'dd.MM.yyyy HH:mm' }}</td>
+      <td width="10%" class="text-center">
+        <ng-container *ngIf="order.status === orderStatus.draft">
+          <button class="btn btn-sm btn-success text-nowrap" (click)="onCompleteOrderButtonClick(order)">Complete Order</button>
+        </ng-container>
+        <ng-container *ngIf="order.status === orderStatus.submitted">
+          <button class="btn btn-link btn-sm text-nowrap" disabled>Submitted</button>
+        </ng-container>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</app-entity-data-container>

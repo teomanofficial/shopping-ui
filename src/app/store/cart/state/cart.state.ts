@@ -23,6 +23,9 @@ import { CreateOrderSuccess } from '@store/orders/state/orders.actions';
 })
 @Injectable()
 export class CartState {
+  constructor(private readonly cartService: CartService) {
+  }
+
   @Selector()
   static selectData({ data }: CartStateModel) {
     return data;
@@ -36,9 +39,6 @@ export class CartState {
   @Selector()
   static selectDataState({ dataState }: CartStateModel) {
     return dataState;
-  }
-
-  constructor(private readonly cartService: CartService) {
   }
 
   @Action(GetCartItemList)

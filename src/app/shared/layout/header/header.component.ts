@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
 
 import { AuthState } from '@store/auth/state/auth.state';
-import { LoginComponent } from '@shared/components/login/login.component';
+import { LoginDialogComponent } from '@shared/components/login-dialog/login-dialog.component';
 import { CurrentUserModel } from '@store/auth/models/current-user.model';
 import { Logout } from '@store/auth/state/auth.actions';
 import { CartState } from '@store/cart/state/cart.state';
@@ -34,7 +34,7 @@ export class HeaderComponent implements OnInit {
   }
 
   onLoginButtonClick() {
-    this.dialogService.open(LoginComponent, { modalClass: 'cascading-modal' })
+    this.dialogService.open(LoginDialogComponent, { modalClass: 'cascading-modal' })
   }
 
   onLogoutClick() {

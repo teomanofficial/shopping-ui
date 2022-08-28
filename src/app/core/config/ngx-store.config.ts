@@ -1,3 +1,1 @@
-
-export const NGRX_STORE_CONFIG = {
-}
+export const NGRX_STORE_CONFIG = {}

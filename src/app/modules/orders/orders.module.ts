@@ -1,8 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgxsModule } from '@ngxs/store';
 
 import { OrdersRoutingModule } from './orders-routing.module';
 import { OrdersComponent } from './orders.component';
+import { SharedModule } from '@shared/shared.module';
+import { OrdersState } from '@store/orders/state/orders.state';
+import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
 
 
 @NgModule({
@@ -11,7 +15,11 @@ import { OrdersComponent } from './orders.component';
   ],
   imports: [
     CommonModule,
-    OrdersRoutingModule
+    OrdersRoutingModule,
+    NgxsModule.forFeature([OrdersState]),
+    SharedModule,
+    MdbAccordionModule
   ]
 })
-export class OrdersModule { }
+export class OrdersModule {
+}

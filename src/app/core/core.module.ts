@@ -14,6 +14,7 @@ import { AuthState } from '@store/auth/state/auth.state';
 import { authenticationInitializer } from '@store/auth/initializers/authentication.initializers';
 import { SetAuthorizationHeaderInterceptor } from '@core/interceptors/set-authorization-header.interceptor';
 import { CartState } from '@store/cart/state/cart.state';
+import { ErrorHandlerInterceptor } from '@core/interceptors/error-handler.interceptor';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { CartState } from '@store/cart/state/cart.state';
   providers: [
     { provide: HTTP_INTERCEPTORS, multi: true, useClass: PrependApiUrlInterceptor },
     { provide: HTTP_INTERCEPTORS, multi: true, useClass: SetAuthorizationHeaderInterceptor },
+    { provide: HTTP_INTERCEPTORS, multi: true, useClass: ErrorHandlerInterceptor },
     {
       provide: APP_INITIALIZER,
       useFactory: authenticationInitializer,

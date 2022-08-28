@@ -1,0 +1,29 @@
+<form (ngSubmit)="onFormSubmit()" [formGroup]="form">
+  <div class="card">
+    <div class="card-header font-weight-bold">Login To Your Account</div>
+    <div class="card-body">
+      <div class="alert alert-danger" *ngIf="loginFailedError">{{ loginFailedError }}</div>
+      <div class="alert alert-danger" *ngIf="validationErrors.length">
+        <ul style="margin-bottom: 0">
+          <li *ngFor="let error of validationErrors">{{ error.message }}</li>
+        </ul>
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="email">Email Address</label>
+        <input class="form-control" formControlName="email" id="email" placeholder="Enter email address" type="text">
+        <span class="validation-error" *ngIf="email.touched && email.invalid && email.hasError('required')">Email address is required</span>
+        <span class="validation-error" *ngIf="email.touched && email.invalid && email.hasError('email')">Enter valid email address</span>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input class="form-control" formControlName="password" id="password" placeholder="Enter password" type="text">
+        <span class="validation-error" *ngIf="password.touched && password.invalid && password.hasError('required')">Password field is required</span>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer d-flex align-items-center justify-content-between">
+    <button class="btn btn-light btn-sm" type="button" (click)="onCancelButtonClick()">Cancel</button>
+    <button class="btn btn-primary btn-sm">Login</button>
+  </div>
+</form>

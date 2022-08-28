@@ -17,6 +17,9 @@ import { ProductsService } from '@store/products/services/products.service';
 })
 @Injectable({ providedIn: 'root' })
 export class ProductState {
+  constructor(private readonly productsService: ProductsService) {
+  }
+
   @Selector()
   static selectProducts({ data }: ProductStateModel) {
     return data;
@@ -25,9 +28,6 @@ export class ProductState {
   @Selector()
   static selectDataState({ dataState }: ProductStateModel) {
     return dataState;
-  }
-
-  constructor(private readonly productsService: ProductsService) {
   }
 
   @Action(GetProductList)

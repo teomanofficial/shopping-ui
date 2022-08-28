@@ -1,11 +1,11 @@
 <div class="product">
   <div class="product__image">
-    <img src="assets/images/products/product.png" alt="product">
+    <img alt="product" src="assets/images/products/product.png">
   </div>
   <div class="product__content">
     <div class="product__title">{{ product.name }}</div>
     <div class="product__price">{{ product.price | currency }}</div>
-    <button class="btn btn-default product__add-basket" (click)="onAddBasketButtonClick()">
+    <button (click)="onAddBasketButtonClick()" class="btn btn-default product__add-basket">
       <span class="fa fa-plus"></span>
     </button>
   </div>

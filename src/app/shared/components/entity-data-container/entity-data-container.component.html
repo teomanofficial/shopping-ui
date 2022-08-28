@@ -1,6 +1,6 @@
 <ng-container [ngSwitch]="dataState">
   <ng-container *ngSwitchCase="dataStateType.loading">
-    <div class="d-flex align-items-center justify-content-center" [style.height]="'200px'">
+    <div [style.height]="'200px'" class="d-flex align-items-center justify-content-center" id="entity-container-loading-indicator">
       <div class="spinner-border" role="status">
         <span class="sr-only">Loading...</span>
       </div>
@@ -10,12 +10,12 @@
     <ng-content></ng-content>
   </ng-container>
   <ng-container *ngSwitchCase="dataStateType.notFound">
-    <div class="alert alert-secondary">
+    <div class="alert alert-secondary" id="entity-container-not-found">
       No records found!
     </div>
   </ng-container>
   <ng-container *ngSwitchCase="dataStateType.loadFailed">
-    <div class="alert alert-danger">
+    <div class="alert alert-danger" id="entity-container-error-occurred">
       Error occurred while loading records
     </div>
   </ng-container>

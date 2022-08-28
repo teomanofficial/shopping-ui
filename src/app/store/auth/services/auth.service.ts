@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { LoginRequestModel } from '@store/auth/models/login-request.model';
 import { LoginResponseModel } from '@store/auth/models/login-response.model';
 import { CurrentUserModel } from '@store/auth/models/current-user.model';
+import { CustomHeaders } from '@core/enums/custom-headers.enum';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -11,7 +12,9 @@ export class AuthService {
   }
 
   login(request: LoginRequestModel) {
-    return this.http.post<LoginResponseModel>('api/Auth/Login', request)
+    return this.http.post<LoginResponseModel>('api/Auth/Login', request, {
+      headers: { [CustomHeaders.skipGlobalErrorhandler]: 'true' }
+    })
   }
 
   getCurrentUser() {

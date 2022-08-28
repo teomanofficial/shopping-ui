@@ -1,0 +1,38 @@
+<table class="table table-bordered table-stripped">
+  <thead>
+  <tr>
+    <th>Product Name</th>
+    <th>Amount</th>
+    <th></th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let item of orderItems; trackBy: trackByOrderItem">
+    <td>{{ item.productName }}</td>
+    <td>{{ item.price * item.quantity | currency }}</td>
+    <td class="text-center actions">
+      <div class="btn-group" role="group">
+        <button (click)="onIncrementButtonClick(item)" [disabled]="actionLoading || item.quantity >= 10"
+                class="btn btn-primary btn-sm btn-floating"
+                type="button">
+          <i class="fa fa-plus"></i>
+        </button>
+        <button class="btn btn-default btn-sm">{{ item.quantity }}</button>
+        <button (click)="onDecrementButtonClick(item)" [disabled]="actionLoading || item.quantity === 1"
+                class="btn btn-primary btn-sm btn-floating"
+                type="button">
+          <i class="fa fa-minus"></i>
+        </button>
+      </div>
+    </td>
+    <td>
+      <button (click)="onDeleteOrderItemButtonClick(item)" [disabled]="actionLoading"
+              class="btn btn-danger btn-sm btn-floating"
+              type="button">
+        <i class="fa fa-trash"></i>
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>

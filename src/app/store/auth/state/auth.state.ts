@@ -1,3 +1,4 @@
+import { EMPTY } from 'rxjs';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { Injectable } from '@angular/core';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
@@ -10,7 +11,6 @@ import { AuthService } from '@store/auth/services/auth.service';
 import { LocalStorageTokenModel } from '@store/auth/models/local-storage-token.model';
 import { AuthConstants } from '@store/auth/enums/auth-constants.enum';
 import { registerAuthenticationTimeout } from '@store/auth/initializers/authentication.initializers';
-import { EMPTY } from 'rxjs';
 
 @State<AuthStateModel>({
   name: 'auth',
@@ -22,6 +22,9 @@ import { EMPTY } from 'rxjs';
 })
 @Injectable()
 export class AuthState {
+  constructor(private readonly authService: AuthService) {
+  }
+
   @Selector()
   static selectState(state: AuthStateModel) {
     return state;
@@ -35,9 +38,6 @@ export class AuthState {
   @Selector()
   static selectIsLoggedIn({ isLoggedIn }: AuthStateModel) {
     return isLoggedIn;
-  }
-
-  constructor(private readonly authService: AuthService) {
   }
 
   @Action(Login)
@@ -78,6 +78,7 @@ export class AuthState {
 
   @Action(Logout)
   dispatchLogout(context: StateContext<AuthStateModel>) {
+    localStorage.removeItem(AuthConstants.tokenStorageKey);
     context.patchState({ token: null, user: null, isLoggedIn: false });
     context.dispatch(new Navigate(['/']))
   }

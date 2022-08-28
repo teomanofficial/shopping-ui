@@ -1,16 +1,67 @@
 <div class="card mb-4">
   <div class="card-header font-weight-bold">
-    Architecture
+    Instructions
   </div>
   <div class="card-body">
     <ol>
-      <li>DDD (Domain Driven Design) approach has been used. Instead of strict discrimination of the Infrastructure and
-        the Domain layer. I follow more SPA based logic and merge them under the `store` layer.
+      <li>Install and run the applications</li>
+      <li>
+        Open UI application and login using following credentials
+        <ul style="margin-bottom: 0">
+          <li><span class="font-weight-bold">Username: </span> user@mail.com</li>
+          <li><span class="font-weight-bold">Password: </span> 123456</li>
+        </ul>
       </li>
-      <li>Each domain has own store and infrastructure and domain components such as model, services, states etc</li>
-      <li>Application layer introduced as modules which contains lazy loaded modules (features)</li>
-      <li>We have also core module where our configurations and application wide definitions declared and stored</li>
+      <li>Visit products page and click the add button to add products into your cart</li>
+      <li>Click cart icon at the top-right of the page to go to cart page</li>
+      <li>Click Create Order button to create new order from selected products</li>
+      <li>Created orders if not completed (submitted), they can be submit later using <code>Complete Order</code> button at the orders page</li>
     </ol>
+  </div>
+</div>
+
+<div class="card mb-4">
+  <div class="card-header font-weight-bold">
+    Architecture
+  </div>
+  <div class="card-body">
+    <mdb-tabs>
+      <mdb-tab title="UI (Angular)">
+        <ol>
+          <li>DDD (Domain Driven Design) approach has been used. Instead of strict discrimination of the Infrastructure
+            and
+            the Domain layer. I follow more SPA based logic and merge them under the `store` layer.
+          </li>
+          <li>Each domain has own store and infrastructure and domain components such as model, services, states etc
+          </li>
+          <li>Application layer introduced as modules which contains lazy loaded modules (features)</li>
+          <li>Application have also core module where our configurations and application wide definitions declared and
+            stored
+          </li>
+        </ol>
+      </mdb-tab>
+      <mdb-tab title="API (.Net Core)">
+        <ol>
+          <li>DDD (Domain Driven Design) used and following layers has been created
+            <ul>
+              <li>Shopping.API</li>
+              <li>Shopping.Application</li>
+              <li>Shopping.Domain</li>
+              <li>Shopping.Domain.Shared</li>
+              <li>Shopping.EntityFrameworkCore</li>
+            </ul>
+            <div class="mt-2 mb-2">
+              <div><span class="font-weight-bold">Application Layers:</span> Shopping.API, Shopping.Application</div>
+              <div><span class="font-weight-bold">Domain Layers:</span> Shopping.Domain, Shopping.Domain.Shared</div>
+              <div><span class="font-weight-bold">Infrastructure Layer:</span> Shopping.EntityFrameworkCore</div>
+            </div>
+          </li>
+          <li>PostgreSQL relational database used.</li>
+          <li>Entity Framework ORM used for abstracting database operations</li>
+          <li>Automapper used to map entities into resources</li>
+        </ol>
+      </mdb-tab>
+    </mdb-tabs>
   </div>
 </div>
 
@@ -20,12 +71,24 @@
   </div>
 
   <div class="card-body">
-    <ol>
-      <li>Clone repository via git cli <code>git clone git@github.com:hsntngr/shopping-ui.git</code></li>
-      <li>Install dependencies via <code>npm install</code></li>
-      <li>Run the application via <code>npm start</code></li>
-      <li>When the application ready visit the <a href="http://localhost:4200">http://localhost:4200</a></li>
-    </ol>
+    <mdb-tabs>
+      <mdb-tab title="UI (Angular)">
+        <ol>
+          <li>Clone repository via git cli <code>git clone git@github.com:hsntngr/shopping-ui.git</code></li>
+          <li>Install dependencies via <code>npm install</code></li>
+          <li>Run the application via <code>npm start</code></li>
+          <li>When the application ready visit the <a href="http://localhost:4200">http://localhost:4200</a></li>
+        </ol>
+      </mdb-tab>
+      <mdb-tab title="API (.Net Core)">
+        <ol>
+          <li>Clone repository via git cli <code>git clone git@github.com:hsntngr/shopping-api.git</code></li>
+          <li>Install nuget packages via <code>dotnet restore</code></li>
+          <li>Run the application via <code> dotnet run -p Shopping.API</code></li>
+          <li>When the application ready visit the <a href="https://localhost:7187">https://localhost:7187</a> for swagger documentation</li>
+        </ol>
+      </mdb-tab>
+    </mdb-tabs>
   </div>
 </div>
 
@@ -34,10 +97,38 @@
     Docker
   </div>
   <div class="card-body">
+    <mdb-tabs>
+      <mdb-tab title="UI (Angular)">
+        <ol>
+          <li>Create an image via <code>docker build -t [authority]/shopping-ui</code></li>
+          <li>Create a container from image via <code>`docker run -d --restart always --name shopping-ui-instance -p [PORT]:80
+            [authority]/shopping-ui`</code></li>
+          <li>When the application ready visit the <a href="http://localhost:[PORT]">http://localhost:[PORT]</a></li>
+        </ol>
+      </mdb-tab>
+      <mdb-tab title="API (.Net Core)">
+        <ol>
+          <li>Create an image via <code>docker build -t [authority]/shopping-api</code></li>
+          <li>Create a container from image via <code>`docker run -d --restart always --name shopping-api-instance -p [PORT]:80
+            [authority]/shopping-api`</code></li>
+          <li>When the application ready visit the <a href="http://localhost:[PORT]">http://localhost:[PORT]</a> for the swagger the document</li>
+        </ol>
+      </mdb-tab>
+    </mdb-tabs>
+  </div>
+</div>
+
+<div class="card mb-4">
+  <div class="card-header font-weight-bold">
+    Notes From Candidate
+  </div>
+  <div class="card-body">
     <ol>
-      <li>Create an image via <code>docker build -t [authority]/shopping-ui</code></li>
-      <li>Create a container from image via <code>`docker run -d --restart always --name sre-instance -p 4200:80 [authority]/shopping-ui`</code></li>
-      <li>When the application ready visit the <a href="http://localhost:4200">http://localhost:4200</a></li>
+      <li>Register feature omitted at the UI implemented at the API</li>
+      <li>Microsoft Identity Framework not used in order the keep authentication and user management as simple as possible</li>
+      <li>Authorization kept as simple as possible. Only owning checked. Example: <code>if (order.UserId != userId)
+        throw new UnauthorizedException();</code></li>
+      <li>Advance level concept considered. Global errors handlers, guards, state management systems has been used.</li>
     </ol>
   </div>
 </div>

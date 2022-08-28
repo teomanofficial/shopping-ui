@@ -5,30 +5,32 @@
     </a>
     <div class="navigations d-flex justify-content-between align-items-center">
       <nav class="my-2 my-md-0 mr-md-3">
-        <a class="navigations__link p-2 text-dark" routerLinkActive="active" routerLink="/products">Products</a>
-        <a class="navigations__link p-2 text-dark" routerLinkActive="active" routerLink="/orders">Orders</a>
+        <a class="navigations__link p-2 text-dark" routerLink="/products" routerLinkActive="active">Products</a>
+        <ng-container *ngIf="isLoggedIn$ | async">
+          <a class="navigations__link p-2 text-dark" routerLink="/orders" routerLinkActive="active">Orders</a>
+        </ng-container>
       </nav>
       <ng-container *ngIf="isLoggedIn$ | async else loginRef">
-        <div mdbDropdown class="dropdown" *ngIf="user$ | async as user">
-          <button class="btn btn-default dropdown-toggle" aria-expanded="false"
-                  type="button" id="dropdownMenu2" mdbDropdownToggle>
+        <div *ngIf="user$ | async as user" class="dropdown" mdbDropdown>
+          <button aria-expanded="false" class="btn btn-default dropdown-toggle"
+                  id="dropdownMenu2" mdbDropdownToggle type="button">
             {{ user.firstName }} {{ user.lastName }}
           </button>
-          <ul mdbDropdownMenu class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenu2">
+          <ul aria-labelledby="dropdownMenu2" class="dropdown-menu dropdown-menu-end" mdbDropdownMenu>
             <li>
-              <button class="dropdown-item" type="button" (click)="onLogoutClick()">Logout</button>
+              <button (click)="onLogoutClick()" class="dropdown-item" type="button">Logout</button>
             </li>
           </ul>
         </div>
-        <a class="btn btn-default cart-link" aria-expanded="false" type="button" routerLink="/cart">
+        <a aria-expanded="false" class="btn btn-default cart-link" routerLink="/cart" type="button">
           <span class="fa fa-cart-plus cart-link__icon"></span>
-          <span class="cart-link__count" *ngIf="cartItemsCount$ | async as count">
+          <span *ngIf="cartItemsCount$ | async as count" class="cart-link__count">
             {{ count > 9 ? '9+' : count }}
           </span>
         </a>
       </ng-container>
       <ng-template #loginRef>
-        <button class="btn btn-outline-primary" (click)="onLoginButtonClick()">Login</button>
+        <button (click)="onLoginButtonClick()" class="btn btn-outline-primary">Login</button>
       </ng-template>
     </div>
   </div>
