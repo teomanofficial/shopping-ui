@@ -1,5 +1,5 @@
 import { EMPTY } from 'rxjs';
-import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { Injectable } from '@angular/core';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import * as moment from 'moment';
@@ -11,6 +11,8 @@ import { AuthService } from '@store/auth/services/auth.service';
 import { LocalStorageTokenModel } from '@store/auth/models/local-storage-token.model';
 import { AuthConstants } from '@store/auth/enums/auth-constants.enum';
 import { registerAuthenticationTimeout } from '@store/auth/initializers/authentication.initializers';
+import { CartStateModel } from '@store/cart/models/cart-state.model';
+import { DataStateType } from '@core/store';
 
 @State<AuthStateModel>({
   name: 'auth',
@@ -22,9 +24,6 @@ import { registerAuthenticationTimeout } from '@store/auth/initializers/authenti
 })
 @Injectable()
 export class AuthState {
-  constructor(private readonly authService: AuthService) {
-  }
-
   @Selector()
   static selectState(state: AuthStateModel) {
     return state;
@@ -38,6 +37,12 @@ export class AuthState {
   @Selector()
   static selectIsLoggedIn({ isLoggedIn }: AuthStateModel) {
     return isLoggedIn;
+  }
+
+  constructor(
+    private readonly store: Store,
+    private readonly authService: AuthService,
+  ) {
   }
 
   @Action(Login)
@@ -65,7 +70,7 @@ export class AuthState {
       .pipe(
         map(user => context.patchState({ user })),
         catchError(() => {
-          context.patchState({ isLoggedIn: false, token: null })
+          context.dispatch(new Logout())
           return EMPTY;
         })
       )
@@ -79,6 +84,11 @@ export class AuthState {
   @Action(Logout)
   dispatchLogout(context: StateContext<AuthStateModel>) {
     localStorage.removeItem(AuthConstants.tokenStorageKey);
+    this.store.reset({
+      ...this.store.snapshot(),
+      auth: { isLoggedIn: false, token: null, user: null } as AuthStateModel,
+      cart: { data: [], dataState: DataStateType.loadEnd } as CartStateModel,
+    })
     context.patchState({ token: null, user: null, isLoggedIn: false });
     context.dispatch(new Navigate(['/']))
   }

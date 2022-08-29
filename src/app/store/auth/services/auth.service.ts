@@ -18,6 +18,8 @@ export class AuthService {
   }
 
   getCurrentUser() {
-    return this.http.get<CurrentUserModel>('api/Auth/AuthenticatedUser')
+    return this.http.get<CurrentUserModel>('api/Auth/AuthenticatedUser', {
+      headers: { [CustomHeaders.skipGlobalErrorhandler]: 'true' }
+    })
   }
 }
