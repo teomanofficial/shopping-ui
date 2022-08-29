@@ -1,25 +1,27 @@
 <app-page-header>
-  <ng-container appPageTitle>Orders</ng-container>
+  <span appPageTitle id="order-page-title">Orders</span>
 </app-page-header>
 
 <app-entity-data-container [dataState]="ordersDataState$ | async">
-  <table class="table table-bordered table-striped w-100">
+  <table class="table table-bordered table-striped w-100" id="orders-table">
     <thead>
     <tr>
-      <th>Order Name</th>
-      <th>Total Price</th>
-      <th>Date</th>
-      <th>Status</th>
+      <th id="orders-name">Order Name</th>
+      <th id="orders-total-price">Total Price</th>
+      <th id="orders-date">Date</th>
+      <th id="orders-status">Status</th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let order of orders$ | async">
-      <td width="30%">{{ order.code }}</td>
-      <td width="30%">{{ order.totalPrice | currency }}</td>
-      <td width="20%">{{ order.createdAt | date: 'dd.MM.yyyy HH:mm' }}</td>
-      <td width="10%" class="text-center">
+    <tr *ngFor="let order of orders$ | async; let i = index">
+      <td width="30%" [id]="'order-name-' + i">{{ order.code }}</td>
+      <td width="30%" [id]="'order-total-price-' + i">{{ order.totalPrice | currency }}</td>
+      <td width="20%" [id]="'order-date-' + i">{{ order.createdAt | date: 'dd.MM.yyyy HH:mm' }}</td>
+      <td width="10%" [id]="'order-status-' + i" class="text-center">
         <ng-container *ngIf="order.status === orderStatus.draft">
-          <button class="btn btn-sm btn-success text-nowrap" (click)="onCompleteOrderButtonClick(order)">Complete Order</button>
+          <button class="btn btn-sm btn-success text-nowrap" (click)="onCompleteOrderButtonClick(order)">
+            Complete Order
+          </button>
         </ng-container>
         <ng-container *ngIf="order.status === orderStatus.submitted">
           <button class="btn btn-link btn-sm text-nowrap" disabled>Submitted</button>

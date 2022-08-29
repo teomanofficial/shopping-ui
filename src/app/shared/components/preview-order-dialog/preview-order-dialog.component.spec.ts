@@ -118,7 +118,7 @@ describe('PreviewOrderDialogComponent', () => {
     expect(fixture.debugElement.query(By.css('#preview-order-complete-order-button'))).toBeTruthy();
   });
 
-  it('should dispatch complete order action when complete order button clicked', () => {
+  it('should dispatch complete order action when complete order button click', () => {
     component.step = 'items';
     fixture.detectChanges();
     const completeOrderButton = fixture.debugElement.query(By.css('#preview-order-complete-order-button'));

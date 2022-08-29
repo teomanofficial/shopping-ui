@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 import { GetProductList } from '@store/products/state/product.actions';
 import { ProductState } from '@store/products/state/product.state';
@@ -11,7 +11,8 @@ import { DataStateType } from '@core/store';
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
-  styleUrls: ['./products.component.scss']
+  styleUrls: ['./products.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class ProductsComponent implements OnInit {
   @Select(ProductState.selectProducts)

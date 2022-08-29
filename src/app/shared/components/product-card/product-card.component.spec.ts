@@ -41,7 +41,7 @@ describe('ProductCardComponent', () => {
     expect(fixture.debugElement.query(By.css('#product-add-to-cart'))).toBeTruthy();
   });
 
-  it('should emit product id when add to cart button clicked', () => {
+  it('should emit product id when add to cart button click', () => {
     const button = fixture.debugElement.query(By.css('#product-add-to-cart')).nativeElement as HTMLButtonElement;
     component.addCart.pipe(take(1)).subscribe(id => expect(id).toBe(PRODUCT.id));
     button.click();

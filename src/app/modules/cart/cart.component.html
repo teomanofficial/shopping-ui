@@ -1,11 +1,12 @@
 <app-page-header>
-  <span appPageTitle>Shopping Cart</span>
+  <span appPageTitle id="cart-page-title">Shopping Cart</span>
   <ng-container *ngIf="(cartItems$ | async).length" appPageActions>
-    <button (click)="onClearCartButtonClick()" [disabled]="cartActionLoading" class="btn btn-link">
+    <button (click)="onClearCartButtonClick()" [disabled]="cartActionLoading" class="btn btn-link"
+            id="cart-clear-items">
       Clear Shopping Cart
     </button>
     <button (click)="onCreateOrderButtonClick()" [disabled]="cartActionLoading || !selectedProductIds.length"
-            class="btn btn-success">
+            class="btn btn-success" id="cart-create-order">
       Create Order
     </button>
   </ng-container>
@@ -13,36 +14,39 @@
 
 <app-entity-data-container [dataState]="cartItemsDataState$ | async">
   <small style="margin-bottom: 10px; display: block">Select following products to create new order</small>
-  <table class="table table-bordered">
+  <table class="table table-bordered" id="cart-items-table">
     <thead>
     <tr>
       <th width="5%"></th>
-      <th>Product Name</th>
-      <th>Price</th>
+      <th id="cart-items-table-product-name">Product Name</th>
+      <th id="cart-items-table-product-price">Price</th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let item of cartItems$ | async; trackBy: trackByCartItem"
+    <tr *ngFor="let item of cartItems$ | async; let i = index; trackBy: trackByCartItem"
         [class.row-selected]="selectedProductIds.includes(item.productId)">
-      <td class="text-center">
+      <td class="text-center" [id]="'cart-items-row-checkbox-' + i">
         <div class="form-check">
-          <input (change)="onProductCheckboxChange(item.productId)" [checked]="selectedProductIds.includes(item.productId)" class="form-check-input" id="flexCheckDefault"
+          <input (change)="onProductCheckboxChange(item.productId)"
+                 [checked]="selectedProductIds.includes(item.productId)"
+                 class="form-check-input"
                  type="checkbox"
                  value=""/>
         </div>
       </td>
-      <td>{{ item.product.name }}</td>
-      <td>{{ (item.product.price * item.quantity) | currency }}</td>
-      <td class="text-center actions">
+      <td [id]="'cart-items-row-product-name-' + i">{{ item.product.name }}</td>
+      <td [id]="'cart-items-row-price-' + i">{{ (item.product.price * item.quantity) | currency }}</td>
+      <td class="text-center actions" [id]="'cart-items-row-actions-' + i">
         <div class="btn-group" role="group">
-          <button (click)="onIncrementButtonClick(item.productId)" [disabled]="quantityChangeLoading"
-                  class="btn btn-primary btn-sm btn-floating"
+          <button (click)="onIncrementButtonClick(item.productId)"
+                  [disabled]="quantityChangeLoading || item.quantity >= 10"
+                  class="btn btn-primary btn-sm btn-floating" [id]="'cart-items-increment-button-' + i"
                   type="button">
             <i class="fa fa-plus"></i>
           </button>
-          <button class="btn btn-default btn-sm">{{ item.quantity }}</button>
+          <button class="btn btn-default btn-sm" [id]="'cart-items-quantity-button-' + i">{{ item.quantity }}</button>
           <button (click)="onDecrementButtonClick(item.productId)" [disabled]="quantityChangeLoading"
-                  class="btn btn-primary btn-sm btn-floating"
+                  class="btn btn-primary btn-sm btn-floating" [id]="'cart-items-decrement-button-' + i"
                   type="button">
             <i class="fa fa-minus"></i>
           </button>
@@ -53,7 +57,7 @@
     <tfoot *ngIf="selectedProductIds && selectedProductIds.length">
     <tr>
       <td colspan="3">Total Cost</td>
-      <td class="text-center">{{ getTotalCost() | async | currency }}</td>
+      <td class="text-center" id="cart-items-total-price">{{ getTotalCost() | async | currency }}</td>
     </tr>
     </tfoot>
   </table>
