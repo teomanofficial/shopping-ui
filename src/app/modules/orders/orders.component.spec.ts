@@ -117,7 +117,7 @@ describe('OrdersComponent', () => {
       expect(row.query(By.css('#order-name-' + index)).nativeElement.textContent.trim()).toBe(orders[index].code);
       expect(row.query(By.css('#order-total-price-' + index)).nativeElement.textContent.trim()).toBe(currencyPipe.transform(orders[index].totalPrice));
       expect(row.query(By.css('#order-date-' + index)).nativeElement.textContent.trim()).toBe(datePipe.transform(orders[index].createdAt, 'dd.MM.yyyy HH:mm'));
-      expect(row.query(By.css('#order-name-status' + index)).nativeElement.textContent.trim()).toBe(orderStatus);
+      expect(row.query(By.css('#order-status-' + index)).nativeElement.textContent.trim()).toBe(orderStatus);
     })
   });
 

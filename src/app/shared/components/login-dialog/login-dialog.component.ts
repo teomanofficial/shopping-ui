@@ -1,6 +1,6 @@
 import { Store } from '@ngxs/store';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { finalize, takeUntil } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
@@ -22,6 +22,7 @@ export class LoginDialogComponent implements OnInit, OnDestroy {
   form: FormGroup;
   loginFailedError: string;
   validationErrors: ValidationErrorModel[] = [];
+  actionLoading: boolean;
 
   private readonly destroyed$ = new Subject();
 
@@ -55,8 +56,13 @@ export class LoginDialogComponent implements OnInit, OnDestroy {
       return;
     }
 
+    this.actionLoading = true;
     const request = this.form.value as LoginRequestModel;
     this.store.dispatch(new Login(request))
+      .pipe(finalize(() => {
+        this.actionLoading = false;
+        this.cdr.markForCheck();
+      }))
       .subscribe(
         () => this.activeDialog.close(),
         (error: HttpErrorResponse) => {

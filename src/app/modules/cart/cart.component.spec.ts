@@ -49,7 +49,7 @@ describe('CartComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CartComponent, PageHeaderComponent, EntityDataContainerComponent, PageTitleDirective, PageActionsDirective],
+      declarations: [CartComponent, PageHeaderComponent, PageTitleDirective, PageActionsDirective, EntityDataContainerComponent],
       providers: [CurrencyPipe],
       imports: [
         MdbModalModule,
@@ -101,8 +101,8 @@ describe('CartComponent', () => {
     rows.forEach((row, index) => {
       const { quantity, product } = items[index];
       const price = currencyPipe.transform(quantity * product.price);
-      expect(row.query(By.css('cart-items-row-product-name-' + index)).nativeElement.textContent.trim()).toBe(product.name);
-      expect(row.query(By.css('cart-items-row-price-' + index)).nativeElement.textContent.trim()).toBe(price);
+      expect(row.query(By.css('#cart-items-row-product-name-' + index)).nativeElement.textContent.trim()).toBe(product.name);
+      expect(row.query(By.css('#cart-items-row-price-' + index)).nativeElement.textContent.trim()).toBe(price);
     });
   });
 

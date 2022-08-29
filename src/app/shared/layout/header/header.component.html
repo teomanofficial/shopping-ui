@@ -5,20 +5,20 @@
     </a>
     <div class="navigations d-flex justify-content-between align-items-center">
       <nav class="my-2 my-md-0 mr-md-3">
-        <a class="navigations__link p-2 text-dark" routerLink="/products" routerLinkActive="active">Products</a>
+        <a class="navigations__link p-2 text-dark" routerLink="/products" routerLinkActive="active" id="products-menu">Products</a>
         <ng-container *ngIf="isLoggedIn$ | async">
-          <a class="navigations__link p-2 text-dark" routerLink="/orders" routerLinkActive="active">Orders</a>
+          <a class="navigations__link p-2 text-dark" routerLink="/orders" routerLinkActive="active" id="orders-menu">Orders</a>
         </ng-container>
       </nav>
       <ng-container *ngIf="isLoggedIn$ | async else loginRef">
-        <div *ngIf="user$ | async as user" class="dropdown" mdbDropdown>
+        <div *ngIf="user$ | async as user" class="dropdown" mdbDropdown id="user-dropdown">
           <button aria-expanded="false" class="btn btn-default dropdown-toggle"
-                  id="dropdownMenu2" mdbDropdownToggle type="button">
+                  id="user-dropdown-button" mdbDropdownToggle type="button">
             {{ user.firstName }} {{ user.lastName }}
           </button>
-          <ul aria-labelledby="dropdownMenu2" class="dropdown-menu dropdown-menu-end" mdbDropdownMenu>
+          <ul aria-labelledby="user-dropdown-button" class="dropdown-menu dropdown-menu-end" mdbDropdownMenu id="user-dropdown-menu">
             <li>
-              <button (click)="onLogoutClick()" class="dropdown-item" type="button">Logout</button>
+              <button (click)="onLogoutClick()" class="dropdown-item" type="button" id="logout-button">Logout</button>
             </li>
           </ul>
         </div>
@@ -30,7 +30,7 @@
         </a>
       </ng-container>
       <ng-template #loginRef>
-        <button (click)="onLoginButtonClick()" class="btn btn-outline-primary">Login</button>
+        <button (click)="onLoginButtonClick()" class="btn btn-outline-primary" id="login-button">Login</button>
       </ng-template>
     </div>
   </div>
